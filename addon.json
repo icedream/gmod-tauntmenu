@@ -1,0 +1,20 @@
+{
+	"title"		:	"PropHunt Taunt Menu",
+	"type"		:	"gamemode",
+	"tags"		:	[ "fun", "roleplay" ],
+	"ignore"	:
+	[
+		"*.md",
+		"*.exe",
+		"*.exe.config",
+		"*.dll",
+		"*.dll.config",
+		"*.pdb",
+		"*.bat",
+		"*.cmd",
+		"*.sh",
+		"*.txt",
+		"*.gma",
+		".git*"
+	]
+}
