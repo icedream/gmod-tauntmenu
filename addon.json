@@ -2,6 +2,7 @@
 	"title"		:	"PropHunt Taunt Menu",
 	"type"		:	"gamemode",
 	"tags"		:	[ "fun", "roleplay" ],
+	"author"	:	"Carl Kittelberger <icedream2k9@die-optimisten.net>"
 	"ignore"	:
 	[
 		"LICENSE",
