@@ -100,7 +100,7 @@ local function CreateMenu()
 end
 
 hook.Add( "PlayerBindPress", "PlayerBindPressFKeyMenus", function(pl, bind, pressed)
-	if string.find(bind, "gm_showspare2") then
+	if bind == "gm_showspare2" and pressed then
 		local menu = CreateMenu()
 		if menu ~= nil then
 			menu:Open()
