@@ -50,6 +50,8 @@ local function PlayTaunt(sound)
 end
 
 local function Apply(menu, taunts)
+	if not IsValid(menu) then return end
+
 	-- sort sounds
 	local sounds = {}
 	for key,value in pairs(taunts.sounds) do
