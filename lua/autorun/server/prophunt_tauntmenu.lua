@@ -111,8 +111,10 @@ local fixedNames = {
 	["taunts/fixed/bees_fix.wav"] = "Not the bees!"
 }
 
-util.AddNetworkString("TauntList_Update")
-util.AddNetworkString("TauntMenu_Play")
+hook.Add("Initialize", "PH_TauntMenu_StringPooling", function()
+	util.AddNetworkString("TauntList_Update")
+	util.AddNetworkString("TauntMenu_Play")
+end)
 
 local function FixName(name)
 	if fixedNames[name] ~= nil then return fixedNames[name] end
