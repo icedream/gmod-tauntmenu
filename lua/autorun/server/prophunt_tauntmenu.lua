@@ -1,5 +1,7 @@
 -- For reference see Prop Hunt, sh_init.lua:58 and sh_init.lua:63
 
+AddCSLuaFile("autorun/client/prophunt_tauntmenu.lua")
+
 local tauntsTable = {}
 local tauntsFixedTable = {}
 local tauntPathsTable = {}
