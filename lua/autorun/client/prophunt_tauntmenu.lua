@@ -1,5 +1,6 @@
 -- Sent by the server to let us know about available taunts
 local sortedTaunts = {}
+local lastMenu = nil
 
 net.Receive("TauntList_Update", function()
 
@@ -101,6 +102,9 @@ end
 
 hook.Add( "PlayerBindPress", "PlayerBindPressFKeyMenus", function(pl, bind, pressed)
 	if bind == "gm_showspare2" and pressed then
+		if lastMenu ~= nil then
+			lastMenu:Close()
+		end
 		local menu = CreateMenu()
 		if menu ~= nil then
 			menu:Open()
