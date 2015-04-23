@@ -105,9 +105,9 @@ hook.Add( "PlayerBindPress", "PlayerBindPressFKeyMenus", function(pl, bind, pres
 		if lastMenu ~= nil then
 			lastMenu:Close()
 		end
-		local menu = CreateMenu()
-		if menu ~= nil then
-			menu:Open()
+		lastMenu = CreateMenu()
+		if lastMenu ~= nil then
+			lastMenu:Open()
 		end
 	end
 end);
