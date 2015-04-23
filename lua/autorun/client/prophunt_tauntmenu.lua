@@ -102,11 +102,11 @@ end
 
 hook.Add( "PlayerBindPress", "PlayerBindPressFKeyMenus", function(pl, bind, pressed)
 	if bind == "gm_showspare2" and pressed then
-		if lastMenu ~= nil then
+		if IsValid(lastMenu) and lastMenu ~= nil then
 			lastMenu:Hide()
 		end
 		lastMenu = CreateMenu()
-		if lastMenu ~= nil then
+		if IsValid(lastMenu) and lastMenu ~= nil then
 			lastMenu:Open()
 		end
 	end
