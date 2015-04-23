@@ -59,6 +59,8 @@ local function Apply(menu, taunts)
 		return string.lower(a.key) < string.lower(b.key)
 	end)
 
+	menu:AddSpacer()
+
 	-- sort categories
 	local categories = {}
 	for key,value in pairs(taunts.categories) do
@@ -79,8 +81,6 @@ local function Apply(menu, taunts)
 			PlayTaunt(item.value)
 		end)
 	end
-
-	menu:AddSpacer()
 end
 
 local function CreateMenu()
