@@ -61,8 +61,6 @@ local function Apply(menu, taunts)
 		return string.lower(a.key) < string.lower(b.key)
 	end)
 
-	menu:AddSpacer()
-
 	-- sort categories
 	local categories = {}
 	for key,value in pairs(taunts.categories) do
@@ -76,6 +74,8 @@ local function Apply(menu, taunts)
 	for _, item in pairs(categories) do
 		Apply(menu:AddSubMenu(item.key), item.value)
 	end
+
+	menu:AddSpacer()
 
 	-- add sounds to the menu
 	for _, item in pairs(sounds) do
