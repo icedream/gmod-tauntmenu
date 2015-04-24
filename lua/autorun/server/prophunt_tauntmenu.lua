@@ -185,12 +185,11 @@ hook.Add("Think", "TauntList_DetectUpdate", function()
 
 			BroadcastUpdate()
 		end
-	end
 
 	-- Tauntpack loader replaces the old table with a new instance whenever it reloads the taunts.
 	-- This means we can use reference equality to detect changes quickly here.
 	-- For reference see sv_ph_tauntpack_loader.lua:55-56
-	if (tauntsTable[TEAM_HUNTERS] ~= GAMEMODE.Hunter_Taunts)
+	else if (tauntsTable[TEAM_HUNTERS] ~= GAMEMODE.Hunter_Taunts)
 		or (tauntsTable[TEAM_PROPS] ~= GAMEMODE.Prop_Taunts) then
 
 		tauntsTable= {}
