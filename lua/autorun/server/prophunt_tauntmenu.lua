@@ -150,10 +150,46 @@ end
 
 -- Detect changes in the taunt list
 hook.Add("Think", "TauntList_DetectUpdate", function()
+	-- If we don't have Tauntpack loader installed, we only have the global taunt tables used by Prop Hunt itself.
+	if (GAMEMODE.Hunter_Taunts == nil) or (GAMEMODE.Prop_Taunts == nil) then
+		if (tauntsTable[TEAM_HUNTERS] ~= HUNTER_TAUNTS)
+			or (tauntsTable[TEAM_PROPS] ~= PROP_TAUNTS) then
+			tauntsTable= {}
+			tauntsFixedTable= {}
+
+			-- Replace some of the names with fixed names since Tauntpack Loader
+			-- just uses the file path for them which will look ugly on the UI
+			tauntsTable[TEAM_HUNTERS] = HUNTER_TAUNTS
+			tauntsFixedTable[TEAM_HUNTERS] = {}
+			for index, path in pairs(HUNTER_TAUNTS) do
+				if file.Exists("sound/" .. path, "GAME") then
+					tauntsFixedTable[TEAM_HUNTERS][index] = { path, FixName(path) }
+				else
+					print("[PH Taunt Menu] Taunt not found, not added to menu: " .. path)
+				end
+			end
+
+			tauntsTable[TEAM_PROPS] = PROP_TAUNTS
+			tauntsFixedTable[TEAM_PROPS] = {}
+			for index, path in pairs(PROP_TAUNTS) do
+				if file.Exists("sound/" .. path, "GAME") then
+					tauntsFixedTable[TEAM_PROPS][index] = { path, FixName(path) }
+				else
+					print("[PH Taunt Menu] Taunt not found, not added to menu: " .. path)
+				end
+			end
+
+			-- Tables that hold sound paths, see Prop Hunt, sh_config.lua:70-168
+			tauntPathsTable[TEAM_HUNTERS] = HUNTER_TAUNTS
+			tauntPathsTable[TEAM_PROPS] = PROP_TAUNTS
+
+			BroadcastUpdate()
+		end
+	end
+
 	-- Tauntpack loader replaces the old table with a new instance whenever it reloads the taunts.
 	-- This means we can use reference equality to detect changes quickly here.
 	-- For reference see sv_ph_tauntpack_loader.lua:55-56
-	if (GAMEMODE.Hunter_Taunts == nil) or (GAMEMODE.Prop_Taunts == nil) then return end
 	if (tauntsTable[TEAM_HUNTERS] ~= GAMEMODE.Hunter_Taunts)
 		or (tauntsTable[TEAM_PROPS] ~= GAMEMODE.Prop_Taunts) then
 
