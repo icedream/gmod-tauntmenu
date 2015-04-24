@@ -165,13 +165,17 @@ hook.Add("Think", "TauntList_DetectUpdate", function()
 		tauntsTable[TEAM_HUNTERS] = GAMEMODE.Hunter_Taunts
 		tauntsFixedTable[TEAM_HUNTERS] = {}
 		for index, item in pairs(GAMEMODE.Hunter_Taunts) do
-			tauntsFixedTable[TEAM_HUNTERS][index] = { item[1], FixName(item[2]) }
+			if file.Exists(item[1], "GAME") then
+				tauntsFixedTable[TEAM_HUNTERS][index] = { item[1], FixName(item[2]) }
+			end
 		end
 
 		tauntsTable[TEAM_PROPS] = GAMEMODE.Prop_Taunts
 		tauntsFixedTable[TEAM_PROPS] = {}
 		for index, item in pairs(GAMEMODE.Prop_Taunts) do
-			tauntsFixedTable[TEAM_PROPS][index] = { item[1], FixName(item[2]) }
+			if file.Exists(item[1], "GAME") then
+				tauntsFixedTable[TEAM_PROPS][index] = { item[1], FixName(item[2]) }
+			end
 		end
 
 		-- Tables that hold sound paths, see Prop Hunt, sh_config.lua:70-168
