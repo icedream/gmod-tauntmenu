@@ -1,5 +1,5 @@
-PropHunt Taunt Menu
-===================
+Minimal PropHunt Taunt Menu
+===========================
 
 Implements a very minimal but flexible menu for playing taunts while playing Prop Hunt.
 

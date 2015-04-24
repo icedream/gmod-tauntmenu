@@ -1,6 +1,6 @@
 {
-	"title"		:	"PropHunt Taunt Menu",
-	"type"		:	"gamemode",
+	"title"		:	"Minimal PropHunt Taunt Menu",
+	"type"		:	"servercontent",
 	"tags"		:	[ "fun", "roleplay" ],
 	"author"	:	"Carl Kittelberger <icedream2k9@die-optimisten.net>",
 	"ignore"	:
