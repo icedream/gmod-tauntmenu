@@ -165,16 +165,20 @@ hook.Add("Think", "TauntList_DetectUpdate", function()
 		tauntsTable[TEAM_HUNTERS] = GAMEMODE.Hunter_Taunts
 		tauntsFixedTable[TEAM_HUNTERS] = {}
 		for index, item in pairs(GAMEMODE.Hunter_Taunts) do
-			if file.Exists(item[1], "GAME") then
+			if file.Exists("sound/" .. item[1], "GAME") then
 				tauntsFixedTable[TEAM_HUNTERS][index] = { item[1], FixName(item[2]) }
+			else
+				print("[PH Taunt Menu] Taunt not found, not added to menu: " .. item[1])
 			end
 		end
 
 		tauntsTable[TEAM_PROPS] = GAMEMODE.Prop_Taunts
 		tauntsFixedTable[TEAM_PROPS] = {}
 		for index, item in pairs(GAMEMODE.Prop_Taunts) do
-			if file.Exists(item[1], "GAME") then
+			if file.Exists("sound/" .. item[1], "GAME") then
 				tauntsFixedTable[TEAM_PROPS][index] = { item[1], FixName(item[2]) }
+			else
+				print("[PH Taunt Menu] Taunt not found, not added to menu: " .. item[1])
 			end
 		end
 
