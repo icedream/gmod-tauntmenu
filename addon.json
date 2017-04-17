@@ -18,6 +18,7 @@
 		"*.txt",
 		"*.gma",
 		".git*",
+		"Jenkinsfile",
 		"logo.*"
 	]
 }
