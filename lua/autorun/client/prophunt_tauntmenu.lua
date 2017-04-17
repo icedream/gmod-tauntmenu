@@ -2,7 +2,7 @@
 local sortedTaunts = {}
 local lastMenu = nil
 
-net.Receive("TauntList_Update", function()
+net.Receive("PH_TauntList_Update", function()
 
 	local tauntsTable = net.ReadTable()
 	
@@ -44,7 +44,7 @@ local windowColor = Color(128, 128, 128, 192)
 local textColor = Color(255, 255, 255)
 
 local function PlayTaunt(sound)
-	net.Start("TauntMenu_Play")
+	net.Start("PH_TauntMenu_Play")
 	net.WriteString(sound)
 	net.SendToServer()
 end

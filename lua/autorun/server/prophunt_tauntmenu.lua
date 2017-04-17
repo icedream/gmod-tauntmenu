@@ -112,8 +112,8 @@ local fixedNames = {
 }
 
 hook.Add("Initialize", "PH_TauntMenu_StringPooling", function()
-	util.AddNetworkString("TauntList_Update")
-	util.AddNetworkString("TauntMenu_Play")
+	util.AddNetworkString("PH_TauntMenu_Update")
+	util.AddNetworkString("PH_TauntMenu_Play")
 end)
 
 local function FixName(name)
@@ -137,13 +137,13 @@ local function PlayTaunt(pl, sound)
 end
 
 local function BroadcastUpdate()
-	net.Start("TauntList_Update")
+	net.Start("PH_TauntList_Update")
 	net.WriteTable(tauntsFixedTable)
 	net.Broadcast()
 end
 
 local function SendUpdate(pl)
-	net.Start("TauntList_Update")
+	net.Start("PH_TauntList_Update")
 	net.WriteTable(tauntsFixedTable)
 	net.Send(pl)
 end
@@ -232,7 +232,7 @@ hook.Add("PlayerInitialSpawn", "PH_TauntMenu_UpdateFirst", function(pl)
 end)
 
 -- Sent by the client to play a custom taunt
-net.Receive("TauntMenu_Play", function(len, pl)
+net.Receive("PH_TauntMenu_Play", function(len, pl)
 	local path = net.ReadString()
 
 	PlayTaunt(pl, path)
