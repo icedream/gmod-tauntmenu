@@ -149,7 +149,7 @@ local function SendUpdate(pl)
 end
 
 -- Detect changes in the taunt list
-hook.Add("Think", "TauntList_DetectUpdate", function()
+hook.Add("Think", "PH_TauntMenu_DetectUpdate", function()
 	-- If we don't have Tauntpack loader installed, we only have the global taunt tables used by Prop Hunt itself.
 	if (GAMEMODE.Hunter_Taunts == nil) or (GAMEMODE.Prop_Taunts == nil) then
 		if (tauntsTable[TEAM_HUNTERS] ~= HUNTER_TAUNTS)
@@ -227,7 +227,7 @@ end)
 
 -- PlayerInitialSpawn gets called when the player gets to "Sending Client Info".
 -- We let the player know all the taunts for the menu here.
-hook.Add("PlayerInitialSpawn", "TauntList_UpdateFirst", function(pl)
+hook.Add("PlayerInitialSpawn", "PH_TauntMenu_UpdateFirst", function(pl)
 	SendUpdate(pl)
 end)
 

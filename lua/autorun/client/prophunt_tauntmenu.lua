@@ -102,7 +102,7 @@ local function CreateMenu()
 	return menu
 end
 
-hook.Add( "PlayerBindPress", "PlayerBindPressFKeyMenus", function(pl, bind, pressed)
+hook.Add( "PlayerBindPress", "PH_TauntMenu_PlayerBindPressFKeyMenus", function(pl, bind, pressed)
 	if bind == "gm_showspare2" and pressed then
 		if IsValid(lastMenu) and lastMenu ~= nil then
 			lastMenu:Hide()
