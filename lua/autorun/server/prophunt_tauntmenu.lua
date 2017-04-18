@@ -127,8 +127,16 @@ local function PlayTaunt(pl, sound)
 
 	-- TAUNT_DELAY from Prop Hunt, sh_config.lua:172
 	-- The code tries to match up with Prop Hunt, init.lua:163-178
-	if GAMEMODE:InRound() && IsValid(pl) && pl:IsPlayer() && pl:Alive() && pl.last_taunt_time + TAUNT_DELAY <= CurTime()
-		&& tauntPaths ~= nil && table.HasValue(tauntPaths, sound) then
+	local tauntDelay = TAUNT_DELAY
+
+	-- Prop Hunt Extended uses its own configuration object
+	if PHE then
+		tauntDelay = PHE.TAUNT_DELAY
+	end
+
+	if GAMEMODE:InRound() and IsValid(pl) and pl:IsPlayer() and pl:Alive()
+		and pl.last_taunt_time + tauntDelay <= CurTime()
+		and tauntPaths ~= nil and table.HasValue(tauntPaths, sound) then
 		pl.last_taunt_time = CurTime()
 		pl.last_taunt = sound
 
@@ -150,18 +158,42 @@ end
 
 -- Detect changes in the taunt list
 hook.Add("Think", "PH_TauntMenu_DetectUpdate", function()
-	-- If we don't have Tauntpack loader installed, we only have the global taunt tables used by Prop Hunt itself.
+	--[[
+	If we don't have Tauntpack loader installed, we only have the global taunt
+	tables used by Prop Hunt itself.
+
+	Here's some technical information on the global taunt tables:
+	   - Garry's Mod own Prop Hunt mode uses HUNTER_TAUNTS and PROP_TAUNTS.
+	     Each table is just a list of paths to sound files.
+	   - Wolvin's Extended Prop Hunt ships with its own taunt menu and does not
+	     use HUNTER_TAUNTS and PROP_TAUNTS, but instead PHE.PH_TAUNT_FILE_LIST.HUNTER
+			 and PHE.PH_TAUNT_FILE_LIST.PROP which are also just a list of paths to
+			 sound files.
+	]]
+
+	local taunts = {
+		-- Assume standard GMod Prop Hunt for now
+		HUNTER = HUNTER_TAUNTS,
+		PROP = PROP_TAUNTS,
+	}
+
+	-- Check for Prop Hunt Extended which stores the paths in a different variable
+	if PHE and PHE.PH_TAUNT_FILE_LIST then
+		taunts.HUNTER = table.Merge(PHE.HUNTER_TAUNTS, PHE.PH_TAUNT_CUSTOM.HUNTER)
+		taunts.PROP = table.Merge(PHE.PROP_TAUNTS, PHE.PH_TAUNT_CUSTOM.PROP)
+	end
+
 	if (GAMEMODE.Hunter_Taunts == nil) or (GAMEMODE.Prop_Taunts == nil) then
-		if (tauntsTable[TEAM_HUNTERS] ~= HUNTER_TAUNTS)
-			or (tauntsTable[TEAM_PROPS] ~= PROP_TAUNTS) then
+		if (tauntsTable[TEAM_HUNTERS] ~= taunts.HUNTER)
+			or (tauntsTable[TEAM_PROPS] ~= taunts.PROP) then
 			tauntsTable= {}
 			tauntsFixedTable= {}
 
 			-- Replace some of the names with fixed names since Tauntpack Loader
 			-- just uses the file path for them which will look ugly on the UI
-			tauntsTable[TEAM_HUNTERS] = HUNTER_TAUNTS
+			tauntsTable[TEAM_HUNTERS] = taunts.HUNTER
 			tauntsFixedTable[TEAM_HUNTERS] = {}
-			for index, path in pairs(HUNTER_TAUNTS) do
+			for index, path in pairs(taunts.HUNTER) do
 				if file.Exists("sound/" .. path, "GAME") then
 					tauntsFixedTable[TEAM_HUNTERS][index] = { path, FixName(path) }
 				else
@@ -169,9 +201,9 @@ hook.Add("Think", "PH_TauntMenu_DetectUpdate", function()
 				end
 			end
 
-			tauntsTable[TEAM_PROPS] = PROP_TAUNTS
+			tauntsTable[TEAM_PROPS] = taunts.PROP
 			tauntsFixedTable[TEAM_PROPS] = {}
-			for index, path in pairs(PROP_TAUNTS) do
+			for index, path in pairs(taunts.PROP) do
 				if file.Exists("sound/" .. path, "GAME") then
 					tauntsFixedTable[TEAM_PROPS][index] = { path, FixName(path) }
 				else
@@ -180,8 +212,8 @@ hook.Add("Think", "PH_TauntMenu_DetectUpdate", function()
 			end
 
 			-- Tables that hold sound paths, see Prop Hunt, sh_config.lua:70-168
-			tauntPathsTable[TEAM_HUNTERS] = HUNTER_TAUNTS
-			tauntPathsTable[TEAM_PROPS] = PROP_TAUNTS
+			tauntPathsTable[TEAM_HUNTERS] = taunts.HUNTER
+			tauntPathsTable[TEAM_PROPS] = taunts.PROP
 
 			BroadcastUpdate()
 		end
@@ -218,8 +250,8 @@ hook.Add("Think", "PH_TauntMenu_DetectUpdate", function()
 		end
 
 		-- Tables that hold sound paths, see Prop Hunt, sh_config.lua:70-168
-		tauntPathsTable[TEAM_HUNTERS] = HUNTER_TAUNTS
-		tauntPathsTable[TEAM_PROPS] = PROP_TAUNTS
+		tauntPathsTable[TEAM_HUNTERS] = taunts.HUNTER
+		tauntPathsTable[TEAM_PROPS] = taunts.PROP
 
 		BroadcastUpdate()
 	end
