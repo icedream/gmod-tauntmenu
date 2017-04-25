@@ -145,13 +145,13 @@ local function PlayTaunt(pl, sound)
 end
 
 local function BroadcastUpdate()
-	net.Start("PH_TauntList_Update")
+	net.Start("PH_TauntMenu_Update")
 	net.WriteTable(tauntsFixedTable)
 	net.Broadcast()
 end
 
 local function SendUpdate(pl)
-	net.Start("PH_TauntList_Update")
+	net.Start("PH_TauntMenu_Update")
 	net.WriteTable(tauntsFixedTable)
 	net.Send(pl)
 end

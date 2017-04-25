@@ -2,10 +2,10 @@
 local sortedTaunts = {}
 local lastMenu = nil
 
-net.Receive("PH_TauntList_Update", function()
+net.Receive("PH_TauntMenu_Update", function()
 
 	local tauntsTable = net.ReadTable()
-	
+
 	--[[
 	print("Got tauntlist update:")
 	PrintTable(tauntsTable)
